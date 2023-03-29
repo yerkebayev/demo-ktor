@@ -1,4 +1,5 @@
 <#-- @ftlvariable name="module" type="com.example.models.Module" -->
+<#-- @ftlvariable name="meta" type="com.example.models.Meta" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +33,20 @@
     <h4>Description</h4>
     <p>${module.description}</p>
     </p>
+    <hr>
+    <h4>Metas of this module</h4>
+    <#list metas as meta>
+        <div>
+            <h3>
+                ${meta.metaKey}
+            </h3>
+            <h4>
+                ${meta.metaValue}
+            </h4>
+            <br>
+        </div>
+    </#list>
+
     <hr>
     <p>
         <a href="/modules/${module.id}/edit">Edit module</a>

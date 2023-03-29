@@ -1,6 +1,11 @@
 package com.example.dao
 
 import com.example.dao.DatabaseFactory.dbQuery
+import com.example.model.Meta
+import com.example.model.Metas
+import com.example.model.Metas.metaKey
+import com.example.model.Metas.metaValue
+import com.example.model.Metas.moduleId
 import com.example.model.Modules
 import com.example.model.Modules.name
 import com.example.model.Modules.type
@@ -18,6 +23,13 @@ class DAOFacadeImpl : DAOFacade {
         duration = row[Modules.duration],
         status = row[Modules.status],
         description = row[Modules.description]
+    )
+    private fun resultRowToMeta(row: ResultRow) = Meta(
+        id = row[Metas.id],
+        moduleId = row[moduleId],
+        metaKey = row[metaKey],
+        metaValue = row[metaValue]
+
     )
     override suspend fun allModules(): List<Module> = dbQuery {
         Modules.selectAll().map(::resultRowToModule)
@@ -68,6 +80,36 @@ class DAOFacadeImpl : DAOFacade {
 
     override suspend fun deleteModule(id: Int): Boolean = dbQuery{
         Modules.deleteWhere { Modules.id eq id } > 0
+    }
+
+    override suspend fun allMetas(id: Int): List<Meta> = dbQuery {
+        Metas.select { Metas.moduleId eq id }.map (:: resultRowToMeta)
+    }
+
+    override suspend fun meta(id: Int): Meta? = dbQuery{
+        Metas.select { Metas.id eq id }.map (:: resultRowToMeta).singleOrNull()
+    }
+
+    override suspend fun addNewMeta(moduleId: Int, metaKey: String, metaValue: String) = dbQuery{
+        val statement = Metas.insert {
+            it[Metas.moduleId] = moduleId
+            it[Metas.metaKey] = metaKey
+            it[Metas.metaValue] = metaValue
+        }
+        statement.resultedValues?.singleOrNull()?.let(::resultRowToMeta)
+    }
+
+    override suspend fun editMeta(id: Int, moduleId: Int, metaKey: String, metaValue: String): Boolean = dbQuery {
+            Metas.update({ Metas.id eq id }) {
+                it[Metas.id] = id
+                it[Metas.moduleId] = moduleId
+                it[Metas.metaKey] = metaKey
+                it[Metas.metaValue] = metaValue
+            } > 0
+        }
+
+    override suspend fun deleteMeta(id: Int): Boolean = dbQuery{
+        Metas.deleteWhere { Metas.id eq id } > 0
     }
 }
 

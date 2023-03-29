@@ -39,7 +39,7 @@
 <div>
     <form action="/modules/${module.id}" method="post">
         <p>
-            <input type="submit" name="_action" value="delete"  style="height: 50px; font-size: 36px>
+            <input type="submit" name="_action" value="delete"  style="height: 50px; font-size: 36px">
         </p>
     </form>
 </div>
