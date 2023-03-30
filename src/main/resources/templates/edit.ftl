@@ -31,6 +31,30 @@
         <h4>Description</h4>
         <textarea name="description" style="height: 100px; font-size: 36px">${module.description}</textarea>
         </p>
+
+        <#if metas?has_content>
+            <#list metas as meta>
+                <div>
+                    <h4>
+                        ${meta.metaKey}
+                    </h4>
+                    <p>
+                        ${meta.metaValue}
+                    </p>
+                    <p>
+                        <a href="/modules/${module.id}/${meta.id}/edit">Edit meta</a>
+                    </p>
+                    <br>
+                </div>
+            </#list>
+        <#else>
+            <p>There are no metas in this module</p>
+        </#if>
+        <p>
+            <a href="/modules/${module.id}/new">Add meta</a>
+        </p>
+
+
         <p>
             <input type="submit" name="_action" value="update" style="height: 50px; font-size: 36px">
         </p>

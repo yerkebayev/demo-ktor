@@ -1,6 +1,5 @@
 package com.example.model
 
-import org.jetbrains.exposed.sql.ForeignKeyConstraint
 import org.jetbrains.exposed.sql.Table
 
 data class Meta (val id: Int,
