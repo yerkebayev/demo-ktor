@@ -1,5 +1,7 @@
 package com.example.dao
 
+import com.example.model.Metas
+import com.example.model.ModuleLinks
 import com.example.model.Modules
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -18,6 +20,8 @@ object DatabaseFactory {
         val database = Database.connect(createHikariDataSource(jdbcURL, username, password))
         transaction(database) {
             SchemaUtils.create(Modules)
+            SchemaUtils.create(Metas)
+            SchemaUtils.create(ModuleLinks)
         }
     }
     suspend fun <T> dbQuery(block: suspend () -> T): T = //coroutines
@@ -26,11 +30,11 @@ object DatabaseFactory {
     private fun createHikariDataSource(
         url: String,
         user: String,
-        passwordd: String
+        password: String
     ) = HikariDataSource(HikariConfig().apply {
         jdbcUrl = url
         username = user
-        password = passwordd
+        this.password = password
         maximumPoolSize = 10
         isAutoCommit = false
         transactionIsolation = "TRANSACTION_REPEATABLE_READ"

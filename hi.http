@@ -1,0 +1,92 @@
+### Getting all modules in JSON format
+GET http://0.0.0.0:8080/api/module
+
+### Create module
+POST http://0.0.0.0:8080/api/module
+Content-Type: application/json
+
+{
+"type": "MODULE",
+  "name": "Изучение Kotlin",
+  "createdAt": "2023-04-04",
+  "duration": 12,
+  "status": "OPEN",
+  "description": "Any description .."
+}
+
+### Update module
+PUT http://0.0.0.0:8080/api/module/1
+Content-Type: application/json
+
+{ "id": 8,
+  "type": "MODULE",
+  "name": "Изучение Kotlin",
+  "createdAt": "2023-03-11 11:31:43.641384",
+  "duration": 12,
+  "status": "OPEN",
+  "description": "Any description .."
+}
+
+### Delete module
+DELETE http://0.0.0.0:8080/api/module/1
+
+### Show module
+GET http://0.0.0.0:8080/api/module/1
+
+###Add meta to a module
+POST http://0.0.0.0:8080/api/module/2/add-meta
+Content-Type: application/json
+
+{
+"metaKey": "Book",
+"metaValue": "What about ChatGPT?"
+}
+###Get all metas for a module
+GET http://0.0.0.0:8080/api/module/2/metas
+
+###Get a specific meta for a module
+GET http://0.0.0.0:8080/api/module/2/meta/10
+
+###Edit a specific meta for a module
+PUT http://0.0.0.0:8080/api/module/2/meta/2
+Content-Type: application/json
+
+{
+"metaKey": "Book",
+"metaValue": "So easy"
+}
+
+###Delete a specific meta for a module
+DELETE http://0.0.0.0:8080/api/module/3/meta/1
+
+
+###GET all module links
+GET http://0.0.0.0:8080/api/module-link
+
+###Get a specific module link
+GET http://0.0.0.0:8080/api/module-link/5
+
+###Create module link
+POST http://0.0.0.0:8080/api/module-link
+Content-Type: application/json
+
+{
+"parentId": 2,
+"childId": 3,
+"linkType": "Idk"
+}
+
+###Update module link
+PUT http://0.0.0.0:8080/api/module-link/1
+Content-Type: application/json
+
+{
+"id": 1,
+"parentId": 3,
+"childId": 2,
+"linkType": "IDK"
+}
+
+###Delete module link
+DELETE http://0.0.0.0:8080/api/module-link/2
+

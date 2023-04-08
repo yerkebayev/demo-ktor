@@ -1,9 +1,12 @@
 package com.example.model
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import org.jetbrains.exposed.sql.Table
 
-data class Meta (val id: Int,
-                 val moduleId: Int,
+@Serializable
+data class Meta (@Transient val id: Int = 0,
+                 @Transient val moduleId: Int = 0,
                  val metaKey: String,
                  val metaValue: String)
 
