@@ -1,5 +1,6 @@
 package com.example.dao
 
+import com.example.enums.Status
 import com.example.dao.DatabaseFactory.dbQuery
 import com.example.model.Module
 import com.example.model.Modules
@@ -9,6 +10,7 @@ import com.example.model.Modules.type
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import com.example.enums.Status.Companion.valueOf
 
 class ModuleDAOImpl : ModuleDAO {
     private fun resultRowToModule(row: ResultRow) = Module(
@@ -17,7 +19,7 @@ class ModuleDAOImpl : ModuleDAO {
         type = row[type],
         createdAt = row[createdAt],
         duration = row[Modules.duration],
-        status = row[Modules.status],
+        status = valueOf(row[Modules.status]),
         description = row[Modules.description]
     )
 
@@ -37,7 +39,7 @@ class ModuleDAOImpl : ModuleDAO {
         type: String,
         createdAt: String,
         duration: Int,
-        status: String,
+        status: Status,
         description: String
     ): Module  = dbQuery {
         val insertStatement = Modules.insert {
@@ -45,7 +47,7 @@ class ModuleDAOImpl : ModuleDAO {
             it[Modules.type] = type
             it[Modules.createdAt] = createdAt
             it[Modules.duration] = duration
-            it[Modules.status] = status
+            it[Modules.status] = status.name
             it[Modules.description] = description
         }
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToModule)!!
@@ -57,7 +59,7 @@ class ModuleDAOImpl : ModuleDAO {
         type: String,
         createdAt: String,
         duration: Int,
-        status: String,
+        status: Status,
         description: String
     ): Boolean  = dbQuery {
         Modules.update({ Modules.id eq id }){
@@ -65,7 +67,7 @@ class ModuleDAOImpl : ModuleDAO {
             it[Modules.type] = type
             it[Modules.createdAt] = createdAt
             it[Modules.duration] = duration
-            it[Modules.status] = status
+            it[Modules.status] = status.name
             it[Modules.description] = description
         } > 0
     }

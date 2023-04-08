@@ -10,7 +10,7 @@ Content-Type: application/json
   "name": "Изучение Kotlin",
   "createdAt": "2023-04-04",
   "duration": 12,
-  "status": "OPEN",
+  "status": "New",
   "description": "Any description .."
 }
 
@@ -23,12 +23,12 @@ Content-Type: application/json
   "name": "Изучение Kotlin",
   "createdAt": "2023-03-11 11:31:43.641384",
   "duration": 12,
-  "status": "OPEN",
+  "status": "Active",
   "description": "Any description .."
 }
 
 ### Delete module
-DELETE http://0.0.0.0:8080/api/module/1
+DELETE http://0.0.0.0:8080/api/module/24
 
 ### Show module
 GET http://0.0.0.0:8080/api/module/1

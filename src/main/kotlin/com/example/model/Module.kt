@@ -1,5 +1,8 @@
 package com.example.model
 
+import com.example.enums.Status
+import com.example.enums.StatusSerializer
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import org.jetbrains.exposed.sql.Table
@@ -10,7 +13,8 @@ data class Module(@Transient val id: Int = 0,
                   var type: String,
                   var createdAt: String,
                   var duration: Int,
-                  var status: String,
+                  @Serializable(with = StatusSerializer::class)
+                  @SerialName("status") var status: Status,
                   var description: String)
 
 object Modules : Table() {
@@ -19,7 +23,7 @@ object Modules : Table() {
     var type = varchar("type", 128)
     var createdAt = varchar("createdAt",64)
     var duration = integer("duration")
-    var status = varchar("status",128)
+    var status = varchar("status", 64)
     var description = varchar("description", 256)
 
     override val primaryKey = PrimaryKey(id)
