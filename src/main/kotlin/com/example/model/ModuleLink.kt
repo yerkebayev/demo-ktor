@@ -12,8 +12,8 @@ data class ModuleLink(@Transient val id: Int = 0, val parentId: Int, val childId
 
 object ModuleLinks: Table() {
     val id = integer("id").autoIncrement()
-    val parentId = integer("parentId").references(Modules.id)
-    val childId = integer("childId").references(Modules.id)
+    val parentId = integer("parentId")
+    val childId = integer("childId")
     val linkType = varchar("linkType", 128)
     override val primaryKey = PrimaryKey(id)
 }

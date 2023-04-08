@@ -14,7 +14,7 @@ import com.example.enums.Status.Companion.valueOf
 
 class ModuleDAOImpl : ModuleDAO {
     private fun resultRowToModule(row: ResultRow) = Module(
-        id = row[Modules.id],
+        id = row[Modules.moduleId],
         name = row[name],
         type = row[type],
         createdAt = row[createdAt],
@@ -29,7 +29,7 @@ class ModuleDAOImpl : ModuleDAO {
 
     override suspend fun module(id: Int): Module?  = dbQuery{
         Modules
-            .select { Modules.id eq id }
+            .select { Modules.moduleId eq id }
             .map(::resultRowToModule)
             .singleOrNull()
     }
@@ -62,7 +62,7 @@ class ModuleDAOImpl : ModuleDAO {
         status: Status,
         description: String
     ): Boolean  = dbQuery {
-        Modules.update({ Modules.id eq id }){
+        Modules.update({ Modules.moduleId eq id }){
             it[Modules.name] = name
             it[Modules.type] = type
             it[Modules.createdAt] = createdAt
@@ -73,7 +73,7 @@ class ModuleDAOImpl : ModuleDAO {
     }
 
     override suspend fun deleteModule(id: Int): Boolean  = dbQuery{
-        Modules.deleteWhere { Modules.id eq id } > 0
+        Modules.deleteWhere { Modules.moduleId eq id } > 0
     }
 
 }

@@ -11,6 +11,9 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.slf4j.LoggerFactory
+import org.slf4j.event.Level
+import java.sql.DriverManager
 
 object DatabaseFactory {
     fun init(config: ApplicationConfig) {
@@ -35,9 +38,10 @@ object DatabaseFactory {
         jdbcUrl = url
         username = user
         this.password = password
-        maximumPoolSize = 10
+        maximumPoolSize = 20
         isAutoCommit = false
         transactionIsolation = "TRANSACTION_REPEATABLE_READ"
         validate()
     })
+
 }

@@ -18,7 +18,7 @@ data class Module(@Transient val id: Int = 0,
                   var description: String)
 
 object Modules : Table() {
-    val id = integer("id").autoIncrement()
+    val moduleId = integer("moduleId").autoIncrement()
     var name = varchar("name", 128)
     var type = varchar("type", 128)
     var createdAt = varchar("createdAt",64)
@@ -26,5 +26,5 @@ object Modules : Table() {
     var status = varchar("status", 64)
     var description = varchar("description", 256)
 
-    override val primaryKey = PrimaryKey(id)
+    override val primaryKey = PrimaryKey(moduleId)
 }

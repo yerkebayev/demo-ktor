@@ -23,13 +23,13 @@ fun main(args: Array<String>) {
                 isLenient = true
             })
         }
-        // other features and routing code go here
     }
     server.start(wait = true)
 
 }
 fun Application.module() {
     DatabaseFactory.init(HoconApplicationConfig(ConfigFactory.load()))
+//    loadDataFromFile()
     configureTemplating()
     configureModuleRouting()
     configureMetaRouting()

@@ -1,0 +1,301 @@
+parentId,childId,linkType
+2,3,PURELL Waterless Surgical Scrub
+3,4,Ru-Hist D
+4,5,temazepam
+5,6,tramadol hydrochloride
+6,7,daytime
+7,8,Vichy Laboratoires Normaderm Daily Deep Cleansing
+8,9,Pramipexole Dihydrochloride
+9,10,Cepacol
+10,11,GAMMAGARD S/D
+11,12,Loratadine
+12,13,Aspiera Wound Care and Antiseptic
+13,14,Metformin Hydrochloride
+14,15,Glycopyrrolate
+15,16,Lisinopril
+16,17,childrens pain and fever
+17,18,Garlic
+18,19,LEVOXYL
+19,20,Cold Sores and Herpes
+20,21,Night Time Cold and Flu
+21,22,Aveeno Active Naturals
+22,23,Sulfamethoxazole and Trimethoprim
+23,24,UNITHROID
+24,25,TRIPLE ANTIBIOTIC
+25,26,Cattle Hair
+26,27,Quinapril HCL and Hydrochlorothiazide
+27,28,Baclofen
+28,29,triamcinolone acetonide
+29,30,Fluconazole
+30,31,Chamomilla Belladonna Special Order
+31,32,Strattera
+32,33,Acetaminophen
+33,34,Shopko Antibacterial Hand Sanitizer
+34,35,Dr Sheffield Muscle Rub Cream
+35,36,Hydrocodone Bitartrate and Acetaminophen
+36,37,Balamine
+37,38,EndaCof
+38,39,good sense cough dm
+39,40,Tussin DM
+40,41,Lantus
+41,42,Ibuprofen
+42,43,Ranitidine
+43,44,Bio Argimony
+44,45,Temozolomide
+45,46,"carbidopa, levodopa and entacapone"
+46,47,gent-L-tip
+47,48,Levothyroxine Sodium
+48,49,MK BZK Antiseptic Towelette Sterile
+49,50,CHANTECAILLE PROTECTION NATURELLE BRONZE SPF 46
+50,51,Pramipexole Dihydrochloride
+51,52,Cover Fx BB Gel Mattfying Anti-Blemish N X-Deep
+52,53,Omeprazole Magnesium
+53,54,Antibacterial Hand
+54,55,fexofenadine hydrochloride
+55,56,Aire-Master
+56,57,Jelly Bean Antibacterial Hand
+57,58,Yellow Jacket hymenoptera venom Venomil Diagnostic
+58,59,VESIcare
+59,60,Cefaclor
+60,61,Zolpidem Tartrate
+61,62,Hydrocortisone
+62,63,Potassium Chloride
+63,64,Anxiety
+64,65,Sterile Water
+65,66,Hyoscyamine Sulfate
+66,67,Amoxicillin and Clavulanate Potassium
+67,68,MORUS RUBRA POLLEN
+68,69,Valproic Acid
+69,70,Milk of Magnesia Mint
+70,71,Fluorouracil
+71,72,PRAMIPEXOLE DIHYDROCHLORIDE
+72,73,The Cover Classic Soft Foundation
+73,74,BLATELLA GERMANICA
+74,75,Mineral Oil
+75,76,Spironolactone
+76,77,Chlorpromazine Hydrochloride
+77,78,Famotidine
+78,79,MEDI-FIRST PLUS Ibuprofen
+79,80,VENTOLINHFA
+80,81,Ranitidine
+81,82,AIR
+82,83,Equate Menthol extra strength
+83,84,TIGAN
+84,85,Zetia
+85,86,EXALGO
+86,87,Gabapentin
+87,88,Diltiazem Hydrochloride
+88,89,Island Spring Antibacterial Body Wash
+89,90,Spatherapy
+90,91,LIP ENHANCER GLOSS SUNSCREEN BROAD SPECTRUM SPF15
+91,92,Bromday
+92,93,Lorazepam
+93,94,BENZTROPINE MESYLATE
+94,95,BIOXIDEA MIRACLE 48 EXCELLENCE DIAMOND MASK
+95,96,Furosemide
+96,97,Valacyclovir Hydrochloride
+97,98,Buspirone hydrochloride
+98,99,WESTERN RAGWEED POLLEN
+99,100,Dr. Smiths Rash and Skin
+100,101,Chlorpromazine Hydrochloride
+101,102,LACHESIS MUTUS
+102,103,Hydrocodone Bitartrate and Acetaminophen
+103,104,MediChoice PVP Swabsticks
+104,105,Atenolol
+105,106,LIDOCAINE
+106,107,SHISEIDO SHEER AND PERFECT COMPACT (REFILL)
+107,108,Doxycycline Hyclate
+108,109,Sertraline Hydrochloride
+109,110,Nitetime D
+110,111,PCMX Surgical Scrub
+111,112,UNIVERSAL BABY FRESH SCENT PETROLEUM
+112,113,ARISTOLOCHIA CLEMATITIS
+113,114,Exchange Select Nasal
+114,115,CLARINS Ever Matte Broad Spectrum SPF 15 Tint 111
+115,116,Felodipine
+116,117,Amoxicillin
+117,118,SoftCIDE-ES
+118,119,Pain ReliefPatches
+119,120,Cytotec
+120,121,hemorrhoidal
+121,122,Adderall
+122,123,Hecoria
+123,124,nicotine
+124,125,Anastrozole
+125,126,good sense allergy and congestion relief
+126,127,Viagra
+127,128,Dye Free Ibuprofen
+128,129,Nplate
+129,130,Extra Strength Pain Relief Therapy
+130,131,Sore Throat
+131,132,Oil-Free Foaming Acne Wash
+132,133,Headache
+133,134,Benicar
+134,135,Benztropine Mesylate
+135,136,Fungustat
+136,137,Vichy Normaderm
+137,138,COUMADIN
+138,139,Pyrilamine Maleate and Phenylephrine Hydrochloride
+139,140,Shopko Antibacterial Foaming Hand Sanitizer
+140,141,Hydrocodone Bitartrate and Acetaminophen
+141,142,IOPE RETIGEN MOISTURE FOUNDATION
+142,143,Vortex
+143,144,"Food - Plant Source, Pecan Carya illinoensis"
+144,145,ALOCRIL
+145,146,Pantoprazole Sodium
+146,147,dg health headache relief
+147,148,Divalproex Sodium
+148,149,ADVANCED CELL BOOSTING EX NIGHT
+149,150,Lamotrigine
+150,151,Pink Grape Fruit Waterless Anti-bacterial Hand Sanitizer
+151,152,Duck Feather
+152,153,Furosemide
+153,154,Cladosporium cladosporioides
+154,155,MOUNTAIN CEDAR POLLEN
+155,156,After Pains and Tears
+156,157,Extra Strength Pain Relief
+157,158,Boob Ease
+158,159,Low Dose Aspirin
+159,160,ASSURED ICE COLD TOPICAL ANALGESIC
+160,161,Gold Bond Intensive Healing Anti Itch Skin Protectant
+161,162,Ondansetron
+162,163,Hydralazine
+163,164,Norpramin
+164,165,BestHealth Honey Lemon
+165,166,Glyburide
+166,167,Pravastatin Sodium
+167,168,St. Ives
+168,169,Esgic
+169,170,DermaCare
+170,171,Rosmarinus Argentum
+171,172,Alendronate Sodium
+172,173,Gabapentin
+173,174,Ibuprofen
+174,175,Atenolol
+175,176,Diltiazem Hydrochloride
+176,177,IMURAN
+177,178,Ibuprofen
+178,179,Trazodone Hydrochloride
+179,180,ATORVASTATIN CALCIUM
+180,181,OxyContin
+181,182,Strattera
+182,183,Loblolly Pine
+183,184,FIRST Marys Mouthwash Compounding
+184,185,oxaliplatin
+185,186,Mary Kay CC Cream Sunscreen Broad Spectrum SPF 15 Medium to Deep
+186,187,Trazodone Hydrochloride
+187,188,Simvastatin
+188,189,Lymphomyosot
+189,190,Dandruff
+190,191,Shopko Cherry SPF 4 Lip Balm
+191,192,Aspirin
+192,193,mark. For Gooness Face
+193,194,dg health heartburn prevention
+194,195,equaline pain relief
+195,196,NovoLog Mix 70/30
+196,197,Metronidazole
+197,198,SHISEIDO SHEER MATIFYING COMPACT (REFILL)
+198,199,PERFECTION LUMIERE
+199,200,Pioglitazone
+200,201,mally Poreless Perfection Glowing Foundation Tan
+201,202,CHANTIX
+202,203,Divalproex Sodium
+203,204,Buprenorphine HCl and Naloxone HCl
+204,205,Ciprofloxacin
+205,206,PERFECTION LUMIERE
+206,207,TIAZAC
+207,208,Mineral Oil
+208,209,ATOPALM Diaper Rash
+209,210,"Food - Fish and Shellfish, Clam"
+210,211,Lymphdrainex
+211,212,Triamterene and Hydrochlorothiazide
+212,213,Fentanyl Citrate
+213,214,Folic Acid
+214,215,Male Formula Plus
+215,216,Simvastatin
+216,217,Indomethacin
+217,218,Zepaseptic
+218,219,AllergyEase Hawaii
+219,220,OXYGEN
+220,221,Treatment Set TS346962
+221,222,anti-bacterial foaming
+222,223,ABILIFY
+223,224,Carbo Vegetabilis 30c
+224,225,Dicyclomine Hydrochloride
+225,226,SORE THROAT DIARRHEA
+226,227,daytime cold and flu
+227,228,Multi Vitamin and Mineral
+228,229,Alba Sunblock Mineral FF SPF 30
+229,230,Cepacol
+230,231,HYDROCODONE BITARTRATE AND ACETAMINOPHEN
+231,232,BOA VIDA Canopy
+232,233,"Pollens - Trees, Pecan Carya Carya illinoensis"
+233,234,Xylocaine
+234,235,Pamine Forte
+235,236,UV LOCK FLOWER NON CHEMICAL SUN
+236,237,REOPRO
+237,238,Carvedilol
+238,239,BEAUTE INITIALE
+239,240,Siltussin SA
+240,241,Oxacillin
+241,242,Wal-itin Allergy Relief
+242,243,ACER SACCHARUM POLLEN
+243,244,Sodium Chloride
+244,245,Clonidine Hydrochloride
+245,246,Diltiazem Hydrochloride
+246,247,DOLORACIN
+247,248,Clementine Hand Sanitizer
+248,249,Crisp Apple Hand Sani
+249,250,Methyldopate Hydrochloride
+250,251,Purminerals 4 in 1 Makeup SPF 15 Deeper
+251,252,Daytime Cough And Cold
+252,253,BronchialCare Soins Des Bronches
+253,254,COCCULUS INDICUS
+254,255,Calamine
+255,256,Mastic Dent
+256,257,VANACOF
+257,258,hcgPLUS
+258,259,Neutrogena Healthy Skin Compact Makeup
+259,260,ERY-TAB
+260,261,Sani Professional Brand Sani-Hands for Kids
+261,262,RoC Retinol Correxion Deep Wrinkle Daily Moisturizer
+262,263,Zolpidem Tartrate
+263,264,Desoximetasone
+264,265,Calcitriol
+265,266,Tramadol Hydrochloride
+266,267,Tranexamic Acid
+267,268,Brimonidine Tartrate
+268,269,HYDROXYZINE PAMOATE
+269,270,Neutrogena On-the-Spot Acne Treatment
+270,271,Stila illuminating tinted moisturizer broad spectrum SPF 20
+271,272,Nasal Decongestant
+272,273,A. Dust
+273,274,Felodipine
+274,275,Captopril
+275,276,Loperamide HCl
+276,277,mesna
+277,278,LEVAQUIN
+278,279,Lisinopril
+279,280,DIORSNOW UV Shield White Reveal UV Protection BB Creme Pearly White SPF 50
+280,281,DawnMist Deodorant Bar No. 5
+281,282,risperidone
+282,283,simvastatin
+283,284,Oxygen-Helium Mixture
+284,285,Silky Finish
+285,286,antacid
+286,287,Butapap
+287,288,Linden
+288,289,topcare miconazole 1
+289,290,MiniDrops
+290,291,Cefepime
+291,292,Chlordiazepoxide and Amitriptyline HCl
+292,293,QUERCUS ALBA POLLEN
+293,294,Healthy Accents Nicotine
+294,295,pioglitazone hydrochloride
+295,296,Baby SensiGel Night Time Formula
+296,297,Tamoxifen Citrate
+297,298,Venlafaxine Hydrochloride
+298,299,APAP
+299,300,Oxybutynin Chloride
+300,301,Petroleum Jelly with Coconut and Aloe
+301,302,TRIPLE ANTIBIOTIC

@@ -11,8 +11,8 @@ data class Meta (@Transient val id: Int = 0,
                  val metaValue: String)
 
 object Metas: Table() {
-    val id = integer("id").autoIncrement()
-    val moduleId = integer("moduleId").references(Modules.id)
+    val id = integer("metaId").autoIncrement()
+    val moduleId = integer("moduleId")
     val metaKey = varchar("metaKey", 128)
     val metaValue = varchar("metaValue", 256)
 
