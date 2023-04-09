@@ -20,4 +20,6 @@ interface ModuleDAO {
                            status: Status,
                            description: String): Boolean
     suspend fun deleteModule(id: Int): Boolean
+
+    suspend fun getModules(offset: Long, limit: Int): List<Module>
 }

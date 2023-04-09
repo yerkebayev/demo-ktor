@@ -43,4 +43,12 @@ class MetaDAOImpl : MetaDAO {
         Metas.deleteWhere { Metas.id eq id } > 0
     }
 
+    override suspend fun getMetas(id: Int, offset: Long, limit: Int): List<Meta> = DatabaseFactory.dbQuery {
+        Metas
+            .select{ Metas.moduleId eq id }
+            .limit(limit, offset)
+            .map { resultRowToMeta(it) }
+    }
+
+
 }

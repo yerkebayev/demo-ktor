@@ -15,4 +15,5 @@ interface MetaDAO {
                          metaValue: String
     ): Boolean
     suspend fun deleteMeta(id: Int): Boolean
+    suspend fun getMetas(id: Int, offset: Long, limit: Int): List<Meta>
 }

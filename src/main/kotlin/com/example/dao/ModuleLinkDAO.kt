@@ -14,4 +14,5 @@ interface ModuleLinkDAO {
                                linkType: String
     ): Boolean
     suspend fun deleteModuleLink(id: Int): Boolean
+    suspend fun getModuleLinks(offset: Long, limit: Int): List<ModuleLink>
 }

@@ -73,7 +73,15 @@ class ModuleDAOImpl : ModuleDAO {
     }
 
     override suspend fun deleteModule(id: Int): Boolean  = dbQuery{
-        Modules.deleteWhere { Modules.moduleId eq id } > 0
+        Modules.deleteWhere { moduleId eq id } > 0
     }
+
+    override suspend fun getModules(offset: Long, limit: Int): List<Module> = dbQuery {
+        Modules
+            .selectAll()
+            .limit(limit, offset)
+            .map {resultRowToModule(it)}
+    }
+
 
 }

@@ -15,7 +15,15 @@ fun Application.configureModuleLinkRouting() {
     routing {
         route("api/module-link") {
             get {
-                call.respondText(jsonContentConverter.encodeToString(dao.allModuleLinks()), status = HttpStatusCode.OK)
+                val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
+                val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
+
+                val offset = (pageNumber - 1) * pageSize
+                val limit = pageSize
+
+                val modulesLinksList = dao.getModuleLinks(offset.toLong(), limit)
+
+                call.respondText(jsonContentConverter.encodeToString(modulesLinksList), status = HttpStatusCode.OK)
             }
             get("{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()

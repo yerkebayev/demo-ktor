@@ -1,5 +1,6 @@
 package com.example.dao
 
+import com.example.dao.DatabaseFactory.dbQuery
 import com.example.model.ModuleLink
 import com.example.model.ModuleLinks
 import org.jetbrains.exposed.sql.*
@@ -14,11 +15,11 @@ class ModuleLinkDAOImpl : ModuleLinkDAO {
         linkType = row[ModuleLinks.linkType]
     )
 
-    override suspend fun allModuleLinks(): List<ModuleLink> = DatabaseFactory.dbQuery {
+    override suspend fun allModuleLinks(): List<ModuleLink> = dbQuery {
         ModuleLinks.selectAll().map(::resultRowToModuleLink)
     }
 
-    override suspend fun moduleLink(id: Int): ModuleLink? = DatabaseFactory.dbQuery {
+    override suspend fun moduleLink(id: Int): ModuleLink? = dbQuery {
         ModuleLinks
             .select { ModuleLinks.id eq id }
             .map(::resultRowToModuleLink)
@@ -26,7 +27,7 @@ class ModuleLinkDAOImpl : ModuleLinkDAO {
     }
 
     override suspend fun addNewModuleLink(parentId: Int, childId: Int, linkType: String): ModuleLink =
-        DatabaseFactory.dbQuery {
+        dbQuery {
             val insertStatement = ModuleLinks.insert {
                 it[ModuleLinks.parentId] = parentId
                 it[ModuleLinks.childId] = childId
@@ -36,7 +37,7 @@ class ModuleLinkDAOImpl : ModuleLinkDAO {
         }
 
     override suspend fun editModuleLink(id: Int, parentId: Int, childId: Int, linkType: String): Boolean =
-        DatabaseFactory.dbQuery {
+        dbQuery {
             ModuleLinks.update({ ModuleLinks.id eq id }) {
                 it[ModuleLinks.parentId] = parentId
                 it[ModuleLinks.childId] = childId
@@ -44,7 +45,16 @@ class ModuleLinkDAOImpl : ModuleLinkDAO {
             } > 0
         }
 
-    override suspend fun deleteModuleLink(id: Int): Boolean = DatabaseFactory.dbQuery {
+    override suspend fun deleteModuleLink(id: Int): Boolean = dbQuery {
         ModuleLinks.deleteWhere { ModuleLinks.id eq id } > 0
     }
+
+    override suspend fun getModuleLinks(offset: Long, limit: Int): List<ModuleLink> = dbQuery {
+        ModuleLinks
+            .selectAll()
+            .limit(limit, offset)
+            .map { resultRowToModuleLink(it) }
+    }
+
+
 }

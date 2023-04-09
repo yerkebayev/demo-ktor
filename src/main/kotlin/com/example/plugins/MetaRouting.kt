@@ -16,7 +16,16 @@ fun Application.configureMetaRouting() {
         route("api/module") {
             get("{id}/metas") {
                 val moduleId = call.parameters.getOrFail<Int>("id").toInt()
-                call.respond(jsonContentConverter.encodeToString(dao.allMetas(moduleId)))
+
+                val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
+                val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
+
+                val offset = (pageNumber - 1) * pageSize
+                val limit = pageSize
+
+                val metasList = dao.getMetas(moduleId, offset.toLong(), limit)
+
+                call.respondText(jsonContentConverter.encodeToString(metasList), status = HttpStatusCode.OK)
             }
             get("{id}/meta/{mid}") {
                 val metaId = call.parameters.getOrFail<Int>("mid").toInt()
