@@ -8,6 +8,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
+import io.ktor.util.*
 import kotlinx.serialization.encodeToString
 
 fun Application.configureModuleLinkRouting() {
@@ -15,15 +16,17 @@ fun Application.configureModuleLinkRouting() {
     routing {
         route("api/module-link") {
             get {
+                val filters = call.request.queryParameters.toMap()
                 val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
                 val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
 
                 val offset = (pageNumber - 1) * pageSize
                 val limit = pageSize
 
-                val modulesLinksList = dao.getModuleLinks(offset.toLong(), limit)
+                val moduleLinksList = dao.getModuleLinks(removeSquareBrackets(filters), offset.toLong(), limit)
 
-                call.respondText(jsonContentConverter.encodeToString(modulesLinksList), status = HttpStatusCode.OK)
+                call.respondText(jsonContentConverter.encodeToString(moduleLinksList), status = HttpStatusCode.OK)
+
             }
             get("{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()

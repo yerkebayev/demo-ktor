@@ -23,9 +23,29 @@ class ModuleDAOImpl : ModuleDAO {
         description = row[Modules.description]
     )
 
-    override suspend fun allModules(): List<Module> = dbQuery{
-        Modules.selectAll().map(::resultRowToModule)
+    override suspend fun getModules(filter: Map<String, Any>, offset: Long, limit: Int): List<Module> = dbQuery {
+        Modules.select {
+            val whereClause = filter.entries.fold(null as Op<Boolean>?) { acc, entry ->
+                val (field, value) = entry
+                when (field) {
+                    "moduleId" -> acc?.and(Modules.moduleId eq value as Int) ?: (Modules.moduleId eq value as Int)
+                    "name" -> acc?.and(name like "$value%") ?: (name like "$value%")
+                    "type" -> acc?.and(type eq value as String) ?: (type eq value as String)
+                    "createdAt" -> acc?.and(createdAt eq value as String) ?: (createdAt eq value as String)
+                    "duration" -> acc?.and(Modules.duration eq value as Int) ?: (Modules.duration eq value as Int)
+                    "status" -> acc?.and(Modules.status eq value as String) ?: (Modules.status eq value as String)
+                    "description" -> acc?.and(Modules.description eq value as String) ?: (Modules.description eq value as String)
+                    else -> throw IllegalArgumentException("Invalid filter field: $field")
+                }
+            }
+            whereClause ?: Op.TRUE
+        }.limit(limit, offset)
+            .map(::resultRowToModule)
     }
+
+
+
+
 
     override suspend fun module(id: Int): Module?  = dbQuery{
         Modules
@@ -76,12 +96,6 @@ class ModuleDAOImpl : ModuleDAO {
         Modules.deleteWhere { moduleId eq id } > 0
     }
 
-    override suspend fun getModules(offset: Long, limit: Int): List<Module> = dbQuery {
-        Modules
-            .selectAll()
-            .limit(limit, offset)
-            .map {resultRowToModule(it)}
-    }
 
 
 }

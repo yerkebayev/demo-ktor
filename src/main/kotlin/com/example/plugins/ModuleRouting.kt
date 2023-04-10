@@ -8,6 +8,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
+import io.ktor.util.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -18,13 +19,14 @@ fun Application.configureModuleRouting() {
     routing {
         route("api/module") {
             get{
+                val filters = call.request.queryParameters.toMap()
                 val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
                 val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
 
                 val offset = (pageNumber - 1) * pageSize
                 val limit = pageSize
 
-                val modulesList = dao.getModules(offset.toLong(), limit)
+                val modulesList = dao.getModules(removeSquareBrackets(filters), offset.toLong(), limit)
 
                 call.respondText(jsonContentConverter.encodeToString(modulesList), status = HttpStatusCode.OK)
             }
@@ -62,6 +64,8 @@ fun Application.configureModuleRouting() {
                     false -> call.respond(HttpStatusCode.BadRequest)
                 }
             }
+
         }
     }
 }
+

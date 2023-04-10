@@ -4,7 +4,7 @@ import com.example.enums.Status
 import com.example.model.Module
 
 interface ModuleDAO {
-    suspend fun allModules(): List<Module>
+    suspend fun getModules(filter: Map<String, Any>, offset: Long, limit: Int): List<Module>
     suspend fun module(id: Int): Module?
     suspend fun addNewModule(name: String,
                              type: String,
@@ -21,5 +21,4 @@ interface ModuleDAO {
                            description: String): Boolean
     suspend fun deleteModule(id: Int): Boolean
 
-    suspend fun getModules(offset: Long, limit: Int): List<Module>
 }

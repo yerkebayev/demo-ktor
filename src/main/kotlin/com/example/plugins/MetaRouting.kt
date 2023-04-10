@@ -8,6 +8,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
+import io.ktor.util.*
 import kotlinx.serialization.encodeToString
 
 fun Application.configureMetaRouting() {
@@ -16,16 +17,17 @@ fun Application.configureMetaRouting() {
         route("api/module") {
             get("{id}/metas") {
                 val moduleId = call.parameters.getOrFail<Int>("id").toInt()
-
+                val filters = call.request.queryParameters.toMap()
                 val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
                 val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
 
                 val offset = (pageNumber - 1) * pageSize
                 val limit = pageSize
 
-                val metasList = dao.getMetas(moduleId, offset.toLong(), limit)
+                val metasList = dao.getMetas(removeSquareBrackets(filters), moduleId, offset.toLong(), limit)
 
                 call.respondText(jsonContentConverter.encodeToString(metasList), status = HttpStatusCode.OK)
+
             }
             get("{id}/meta/{mid}") {
                 val metaId = call.parameters.getOrFail<Int>("mid").toInt()

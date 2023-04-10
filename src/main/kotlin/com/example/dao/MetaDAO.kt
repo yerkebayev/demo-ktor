@@ -3,7 +3,7 @@ package com.example.dao
 import com.example.model.Meta
 
 interface MetaDAO {
-    suspend fun allMetas(id: Int): List<Meta>
+    suspend fun getMetas(filter: Map<String, Any>, id: Int, offset: Long, limit: Int): List<Meta>
     suspend fun meta(id: Int): Meta?
     suspend fun addNewMeta(moduleId: Int,
                            metaKey: String,
@@ -15,5 +15,4 @@ interface MetaDAO {
                          metaValue: String
     ): Boolean
     suspend fun deleteMeta(id: Int): Boolean
-    suspend fun getMetas(id: Int, offset: Long, limit: Int): List<Meta>
 }

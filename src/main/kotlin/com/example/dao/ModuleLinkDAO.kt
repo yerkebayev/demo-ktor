@@ -1,9 +1,10 @@
 package com.example.dao
 
+import com.example.model.Module
 import com.example.model.ModuleLink
 
 interface ModuleLinkDAO {
-    suspend fun allModuleLinks(): List<ModuleLink>
+    suspend fun getModuleLinks(filter: Map<String, Any>, offset: Long, limit: Int): List<ModuleLink>
     suspend fun moduleLink(id: Int): ModuleLink?
     suspend fun addNewModuleLink(parentId: Int,
                                  childId: Int,
@@ -14,5 +15,4 @@ interface ModuleLinkDAO {
                                linkType: String
     ): Boolean
     suspend fun deleteModuleLink(id: Int): Boolean
-    suspend fun getModuleLinks(offset: Long, limit: Int): List<ModuleLink>
 }
