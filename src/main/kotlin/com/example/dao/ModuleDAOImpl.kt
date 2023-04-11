@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import com.example.enums.Status.Companion.valueOf
+import com.example.model.types
 
 class ModuleDAOImpl : ModuleDAO {
     private fun resultRowToModule(row: ResultRow) = Module(
@@ -23,7 +24,7 @@ class ModuleDAOImpl : ModuleDAO {
         description = row[Modules.description]
     )
 
-    override suspend fun getModules(filter: Map<String, Any>, offset: Long, limit: Int): List<Module> = dbQuery {
+    override suspend fun getModulesWithFilters(filter: Map<String, Any>): List<Module> = dbQuery {
         Modules.select {
             val whereClause = filter.entries.fold(null as Op<Boolean>?) { acc, entry ->
                 val (field, value) = entry
@@ -39,9 +40,13 @@ class ModuleDAOImpl : ModuleDAO {
                 }
             }
             whereClause ?: Op.TRUE
-        }.limit(limit, offset)
-            .map(::resultRowToModule)
+        }.map(::resultRowToModule)
     }
+    override suspend fun getWithPagination (moduleList: List<Module>, offset: Long, limit: Int): List<Module> = dbQuery{
+        val endIndex = minOf((offset + limit).toInt(), moduleList.size)
+        moduleList.subList(offset.toInt(), endIndex)
+    }
+
 
 
 
@@ -64,7 +69,8 @@ class ModuleDAOImpl : ModuleDAO {
     ): Module  = dbQuery {
         val insertStatement = Modules.insert {
             it[Modules.name] = name
-            it[Modules.type] = type
+            it[Modules.type] = if (type.uppercase() in types) { type.uppercase() }
+            else { "ERROR" }
             it[Modules.createdAt] = createdAt
             it[Modules.duration] = duration
             it[Modules.status] = status.name
@@ -84,7 +90,8 @@ class ModuleDAOImpl : ModuleDAO {
     ): Boolean  = dbQuery {
         Modules.update({ Modules.moduleId eq id }){
             it[Modules.name] = name
-            it[Modules.type] = type
+            it[Modules.type] = if (type.uppercase() in types) { type.uppercase() }
+            else { "ERROR" }
             it[Modules.createdAt] = createdAt
             it[Modules.duration] = duration
             it[Modules.status] = status.name

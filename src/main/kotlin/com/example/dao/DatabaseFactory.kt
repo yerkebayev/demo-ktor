@@ -1,5 +1,6 @@
 package com.example.dao
 
+import com.example.loadDataFromFile
 import com.example.model.Metas
 import com.example.model.ModuleLinks
 import com.example.model.Modules
@@ -11,9 +12,6 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.slf4j.LoggerFactory
-import org.slf4j.event.Level
-import java.sql.DriverManager
 
 object DatabaseFactory {
     fun init(config: ApplicationConfig) {

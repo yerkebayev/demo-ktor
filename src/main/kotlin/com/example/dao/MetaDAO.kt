@@ -1,9 +1,11 @@
 package com.example.dao
 
 import com.example.model.Meta
+import com.example.model.Module
 
 interface MetaDAO {
-    suspend fun getMetas(filter: Map<String, Any>, id: Int, offset: Long, limit: Int): List<Meta>
+    suspend fun getMetasWithFilters(filter: Map<String, Any>, moduleId: Int): List<Meta>
+    suspend fun getWithPagination (metaList: List<Meta>, offset: Long, limit: Int): List<Meta>
     suspend fun meta(id: Int): Meta?
     suspend fun addNewMeta(moduleId: Int,
                            metaKey: String,

@@ -3,10 +3,8 @@ package com.example.dao
 import com.example.dao.DatabaseFactory.dbQuery
 import com.example.model.Meta
 import com.example.model.Metas
-import com.example.model.Modules
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 
 class MetaDAOImpl : MetaDAO {
     private fun resultRowToMeta(row: ResultRow) = Meta(
@@ -16,7 +14,7 @@ class MetaDAOImpl : MetaDAO {
         metaValue = row[Metas.metaValue]
     )
 
-    override suspend fun getMetas(filter: Map<String, Any>, moduleId: Int, offset: Long, limit: Int): List<Meta> = dbQuery{
+    override suspend fun getMetasWithFilters(filter: Map<String, Any>, moduleId: Int): List<Meta> = dbQuery{
         Metas.select {
             val whereClause = filter.entries.fold(null as Op<Boolean>?) { acc, entry ->
                 val (field, value) = entry
@@ -29,17 +27,20 @@ class MetaDAOImpl : MetaDAO {
                 }
             }
             whereClause?.and(Metas.moduleId eq moduleId) ?: (Metas.moduleId eq moduleId)
-        }.limit(limit, offset)
-            .map(::resultRowToMeta)
+        }.map(::resultRowToMeta)
+    }
+
+    override suspend fun getWithPagination(metaList: List<Meta>, offset: Long, limit: Int ): List<Meta> = dbQuery {
+        val endIndex = minOf((offset + limit).toInt(), metaList.size)
+        metaList.subList(offset.toInt(), endIndex)
     }
 
 
-
-    override suspend fun meta(id: Int): Meta? = DatabaseFactory.dbQuery {
+    override suspend fun meta(id: Int): Meta? = dbQuery {
         Metas.select { Metas.id eq id }.map(::resultRowToMeta).singleOrNull()
     }
 
-    override suspend fun addNewMeta(moduleId: Int, metaKey: String, metaValue: String) = DatabaseFactory.dbQuery {
+    override suspend fun addNewMeta(moduleId: Int, metaKey: String, metaValue: String) = dbQuery {
         val statement = Metas.insert {
             it[Metas.moduleId] = moduleId
             it[Metas.metaKey] = metaKey
@@ -49,7 +50,7 @@ class MetaDAOImpl : MetaDAO {
     }
 
     override suspend fun editMeta(id: Int, moduleId: Int, metaKey: String, metaValue: String): Boolean =
-        DatabaseFactory.dbQuery {
+        dbQuery {
             Metas.update({ Metas.id eq id }) {
                 it[Metas.id] = id
                 it[Metas.moduleId] = moduleId
@@ -58,7 +59,7 @@ class MetaDAOImpl : MetaDAO {
             } > 0
         }
 
-    override suspend fun deleteMeta(id: Int): Boolean = DatabaseFactory.dbQuery {
+    override suspend fun deleteMeta(id: Int): Boolean = dbQuery {
         Metas.deleteWhere { Metas.id eq id } > 0
     }
 

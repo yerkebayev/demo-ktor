@@ -18,17 +18,36 @@ fun Application.configureModuleRouting() {
     val dao = ModuleDAOImpl()
     routing {
         route("api/module") {
-            get{
+            get("{page}/{size}"){
                 val filters = call.request.queryParameters.toMap()
                 val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
                 val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
 
-                val offset = (pageNumber - 1) * pageSize
+                val offset = (pageNumber - 1) * pageSize.toLong()
                 val limit = pageSize
 
-                val modulesList = dao.getModules(removeSquareBrackets(filters), offset.toLong(), limit)
+                val filtered = dao.getModulesWithFilters(removeSquareBrackets(filters))
+                val totalItems = filtered.size
+                val totalPages = (totalItems / limit) + if (totalItems % limit == 0) 0 else 1
 
-                call.respondText(jsonContentConverter.encodeToString(modulesList), status = HttpStatusCode.OK)
+                val currentPage = when {
+                    totalItems == 0 -> 0
+                    pageNumber > totalPages -> totalPages
+                    else -> pageNumber
+                }
+
+                val paginated =
+                    if (limit >= totalItems) filtered
+                    else dao.getWithPagination(filtered, offset, limit)
+
+                val result = mapOf(
+                    "data" to paginated,
+                    "currentPage" to currentPage,
+                    "totalItems" to totalItems,
+                    "totalPages" to totalPages
+                )
+                call.respondText(jsonContentConverter.encodeToString(result.toString()), ContentType.Application.Json, status = HttpStatusCode.OK)
+
             }
             get("{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()

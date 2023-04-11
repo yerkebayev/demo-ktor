@@ -1,13 +1,10 @@
 package com.example.dao
 
 import com.example.dao.DatabaseFactory.dbQuery
-import com.example.model.Module
 import com.example.model.ModuleLink
 import com.example.model.ModuleLinks
-import com.example.model.Modules
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 
 class ModuleLinkDAOImpl : ModuleLinkDAO {
 
@@ -18,7 +15,7 @@ class ModuleLinkDAOImpl : ModuleLinkDAO {
         linkType = row[ModuleLinks.linkType]
     )
 
-    override suspend fun getModuleLinks(filter: Map<String, Any>, offset: Long, limit: Int): List<ModuleLink> = dbQuery {
+    override suspend fun getModuleLinksWithFilters(filter: Map<String, Any>): List<ModuleLink> = dbQuery {
         ModuleLinks.select {
             val whereClause = filter.entries.fold(null as Op<Boolean>?) { acc, entry ->
                 val (field, value) = entry
@@ -31,8 +28,11 @@ class ModuleLinkDAOImpl : ModuleLinkDAO {
                 }
             }
             whereClause ?: Op.TRUE
-        }.limit(limit, offset)
-            .map(::resultRowToModuleLink)
+        }.map(::resultRowToModuleLink)
+    }
+    override suspend fun getWithPagination (moduleLinkList: List<ModuleLink>, offset: Long, limit: Int): List<ModuleLink> = dbQuery{
+        val endIndex = minOf((offset + limit).toInt(), moduleLinkList.size)
+        moduleLinkList.subList(offset.toInt(), endIndex)
     }
 
 

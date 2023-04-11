@@ -28,3 +28,5 @@ object Modules : Table() {
 
     override val primaryKey = PrimaryKey(moduleId)
 }
+
+val types = ("PROGRAM, MODULE") // for type column

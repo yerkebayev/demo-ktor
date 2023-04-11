@@ -4,7 +4,8 @@ import com.example.model.Module
 import com.example.model.ModuleLink
 
 interface ModuleLinkDAO {
-    suspend fun getModuleLinks(filter: Map<String, Any>, offset: Long, limit: Int): List<ModuleLink>
+    suspend fun getModuleLinksWithFilters(filter: Map<String, Any>): List<ModuleLink>
+    suspend fun getWithPagination (moduleList: List<ModuleLink>, offset: Long, limit: Int): List<ModuleLink>
     suspend fun moduleLink(id: Int): ModuleLink?
     suspend fun addNewModuleLink(parentId: Int,
                                  childId: Int,

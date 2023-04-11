@@ -1,5 +1,4 @@
 package com.example
-import com.example.dao.DatabaseFactory.dbQuery
 import com.example.dao.MetaDAOImpl
 import com.example.dao.ModuleDAOImpl
 import com.example.dao.ModuleLinkDAOImpl
@@ -9,17 +8,15 @@ import com.example.model.ModuleLinks
 import com.example.model.Modules
 import com.opencsv.CSVReader
 import kotlinx.coroutines.*
-import org.jetbrains.exposed.sql.SchemaUtils
 import java.io.File
 import java.util.*
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.transaction
 
 @OptIn(DelicateCoroutinesApi::class)
 fun loadDataFromFile() {
     GlobalScope.launch {
-        truncateTablesAndResetAutoIncrement()
-        fillModules()
-        fillMetas()
-        fillModuleLinks()
+        cleanTables()
     }
 
 }
@@ -85,13 +82,22 @@ fun fillModuleLinks() {
     }
 }
 
-suspend fun truncateTablesAndResetAutoIncrement() {
-    dbQuery {
-        // Drop all tables
-        SchemaUtils.drop(Modules, Metas, ModuleLinks)
-
-        // Recreate tables
-        SchemaUtils.create(Modules, Metas, ModuleLinks)
-
+fun cleanTables() {
+    transaction {
+        if(Metas.selectAll().count() > 0) {
+            exec("TRUNCATE TABLE `mydatabase`.`Metas`;")
+            fillMetas()
+        }
+        if(ModuleLinks.selectAll().count() > 0) {
+            exec("TRUNCATE TABLE `mydatabase`.`ModuleLinks`;")
+            fillModuleLinks()
+        }
+        if(Modules.selectAll().count() > 0) {
+            exec("SET FOREIGN_KEY_CHECKS=0")
+            exec("TRUNCATE TABLE `mydatabase`.`Modules`;")
+            exec("SET FOREIGN_KEY_CHECKS=1")
+            fillModules()
+        }
     }
+
 }

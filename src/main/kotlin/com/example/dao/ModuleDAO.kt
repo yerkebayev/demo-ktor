@@ -4,7 +4,8 @@ import com.example.enums.Status
 import com.example.model.Module
 
 interface ModuleDAO {
-    suspend fun getModules(filter: Map<String, Any>, offset: Long, limit: Int): List<Module>
+    suspend fun getModulesWithFilters(filter: Map<String, Any>): List<Module>
+    suspend fun getWithPagination (moduleList: List<Module>, offset: Long, limit: Int): List<Module>
     suspend fun module(id: Int): Module?
     suspend fun addNewModule(name: String,
                              type: String,
