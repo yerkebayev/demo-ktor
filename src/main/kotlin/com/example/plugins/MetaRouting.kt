@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import Page
 import com.example.dao.MetaDAOImpl
 import com.example.model.Meta
 import io.ktor.http.*
@@ -16,35 +17,31 @@ fun Application.configureMetaRouting() {
     routing {
         route("api/module") {
             get("{id}/metas/{page}/{size}") {
-                    val moduleId = call.parameters.getOrFail<Int>("id").toInt()
-                    val filters = call.request.queryParameters.toMap()
-                    val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
-                    val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
+                val moduleId = call.parameters.getOrFail<Int>("id").toInt()
+                val filters = call.request.queryParameters.toMap()
+                val pageNumber = call.parameters["page"]?.toIntOrNull() ?: 1
+                val pageSize = call.parameters["size"]?.toIntOrNull() ?: 10
 
-                    val offset = (pageNumber - 1) * pageSize.toLong()
-                    val limit = pageSize
+                val offset = (pageNumber - 1) * pageSize.toLong()
+                val limit = pageSize
 
-                    val filtered = dao.getMetasWithFilters(removeSquareBrackets(filters), moduleId)
-                    val totalItems = filtered.size
-                    val totalPages = (totalItems / limit) + if (totalItems % limit == 0) 0 else 1
+                val filtered = dao.getMetasWithFilters(removeSquareBrackets(filters), moduleId)
+                val totalItems = filtered.size
+                val totalPages = (totalItems / limit) + if (totalItems % limit == 0) 0 else 1
 
-                    val currentPage = when {
-                        totalItems == 0 -> 0
-                        pageNumber > totalPages -> totalPages
-                        else -> pageNumber
-                    }
+                val currentPage = when {
+                    totalItems == 0 -> 0
+                    pageNumber > totalPages -> totalPages
+                    else -> pageNumber
+                }
 
-                    val paginated =
-                        if (limit >= totalItems) filtered
-                        else dao.getWithPagination(filtered, offset, limit)
+                val paginated =
+                    if (limit >= totalItems) filtered
+                    else dao.getWithPagination(filtered, offset, limit)
 
-                    val result = mapOf(
-                        "data" to paginated,
-                        "currentPage" to currentPage,
-                        "totalItems" to totalItems,
-                        "totalPages" to totalPages
-                    )
-                    call.respondText(jsonContentConverter.encodeToString(result.toString()), ContentType.Application.Json, status = HttpStatusCode.OK)
+                val page = Page(paginated, currentPage, totalItems, totalPages)
+                val json = Page.toJson(page)
+                call.respondText(json, ContentType.Application.Json, HttpStatusCode.OK)
 
                 }
             }

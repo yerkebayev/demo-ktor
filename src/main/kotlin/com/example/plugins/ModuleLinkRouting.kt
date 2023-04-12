@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import Page
 import com.example.dao.ModuleLinkDAOImpl
 import com.example.model.ModuleLink
 import io.ktor.http.*
@@ -37,13 +38,9 @@ fun Application.configureModuleLinkRouting() {
                     if (limit >= totalItems || offset >= totalItems) filtered
                     else dao.getWithPagination(filtered, offset, limit)
 
-                val result = mapOf(
-                    "data" to paginated,
-                    "currentPage" to currentPage,
-                    "totalItems" to totalItems,
-                    "totalPages" to totalPages
-                )
-                call.respondText(jsonContentConverter.encodeToString(result.toString()), ContentType.Application.Json, status = HttpStatusCode.OK)
+                val page = Page(paginated, currentPage, totalItems, totalPages)
+                val json = Page.toJson(page)
+                call.respondText(json, ContentType.Application.Json, HttpStatusCode.OK)
             }
             get("{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()

@@ -31,7 +31,7 @@ fun main(args: Array<String>) {
 }
 fun Application.module() {
     DatabaseFactory.init(HoconApplicationConfig(ConfigFactory.load()))
-    loadDataFromFile()
+//    loadDataFromFile()
     configureTemplating()
     configureModuleRouting()
     configureMetaRouting()
