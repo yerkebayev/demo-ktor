@@ -2,6 +2,7 @@ package com.example.plugins
 
 import Page
 import com.example.dao.ModuleDAOImpl
+import com.example.enums.fromType
 import com.example.model.Module
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -63,13 +64,13 @@ fun Application.configureModuleRouting() {
             post {
                 val jsonString = call.receive<String>()
                 val module = jsonContentConverter.decodeFromString(Module.serializer(), jsonString)
-                dao.addNewModule(module.name, module.type, module.createdAt, module.duration, module.status, module.description)
+                dao.addNewModule(module.name, fromType(module.type), module.createdAt, module.duration, module.status, module.description)
                 call.respond(HttpStatusCode.Created)
             }
             put("{id}") {
                 val jsonString = call.receive<String>()
                 val module = jsonContentConverter.decodeFromString(Module.serializer(), jsonString)
-                when (dao.editModule(module.id, module.name, module.type, module.createdAt, module.duration, module.status, module.description)) {
+                when (dao.editModule(module.id, module.name, fromType(module.type), module.createdAt, module.duration, module.status, module.description)) {
                     true -> call.respond(HttpStatusCode.Accepted)
                     false -> call.respond(HttpStatusCode.BadRequest)
                 }

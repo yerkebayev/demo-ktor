@@ -11,13 +11,13 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import com.example.enums.Status.Companion.valueOf
-import com.example.model.types
+import com.example.enums.toType
 
 class ModuleDAOImpl : ModuleDAO {
     private fun resultRowToModule(row: ResultRow) = Module(
         id = row[Modules.moduleId],
         name = row[name],
-        type = row[type],
+        type = toType(row[type]),
         createdAt = row[createdAt],
         duration = row[Modules.duration],
         status = valueOf(row[Modules.status]),
@@ -69,8 +69,7 @@ class ModuleDAOImpl : ModuleDAO {
     ): Module  = dbQuery {
         val insertStatement = Modules.insert {
             it[Modules.name] = name
-            it[Modules.type] = if (type.uppercase() in types) { type.uppercase() }
-            else { "ERROR" }
+            it[Modules.type] = type
             it[Modules.createdAt] = createdAt
             it[Modules.duration] = duration
             it[Modules.status] = status.name
@@ -90,8 +89,7 @@ class ModuleDAOImpl : ModuleDAO {
     ): Boolean  = dbQuery {
         Modules.update({ Modules.moduleId eq id }){
             it[Modules.name] = name
-            it[Modules.type] = if (type.uppercase() in types) { type.uppercase() }
-            else { "ERROR" }
+            it[Modules.type] = type
             it[Modules.createdAt] = createdAt
             it[Modules.duration] = duration
             it[Modules.status] = status.name
