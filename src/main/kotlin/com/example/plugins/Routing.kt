@@ -1,17 +1,17 @@
-package com.example.plugins//package com.example.plugins
-//
-//import com.example.dao.DAO
-//import com.example.dao.dao
-//import io.ktor.http.*
-//import io.ktor.server.routing.*
-//import io.ktor.server.response.*
-//import io.ktor.server.application.*
-//import io.ktor.server.freemarker.*
-//import io.ktor.server.request.*
-//import io.ktor.server.util.*
-//
-//fun Application.configureRouting() {
-//
+package com.example.plugins
+
+import io.ktor.http.*
+import io.ktor.server.routing.*
+import io.ktor.server.response.*
+import io.ktor.server.application.*
+import io.ktor.server.freemarker.*
+import io.ktor.server.plugins.swagger.*
+import io.ktor.server.request.*
+import io.ktor.server.util.*
+
+fun Application.configureRouting() {
+
+
 //    routing {
 //        get("/") {
 //            call.respondRedirect("modules")
@@ -121,4 +121,4 @@ package com.example.plugins//package com.example.plugins
 //            }
 //        }
 //    }
-//}
+}

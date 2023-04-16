@@ -84,20 +84,24 @@ fun fillModuleLinks() {
 
 fun cleanTables() {
     transaction {
+
+//        if(Modules.selectAll().count() > 0) {
+//            exec("SET FOREIGN_KEY_CHECKS=0")
+//            exec("TRUNCATE TABLE `mydatabase`.`Modules`;")
+//            exec("SET FOREIGN_KEY_CHECKS=1")
+//        }
+//        fillModules()
+
         if(Metas.selectAll().count() > 0) {
             exec("TRUNCATE TABLE `mydatabase`.`Metas`;")
-            fillMetas()
         }
+        fillMetas()
         if(ModuleLinks.selectAll().count() > 0) {
             exec("TRUNCATE TABLE `mydatabase`.`ModuleLinks`;")
-            fillModuleLinks()
         }
-        if(Modules.selectAll().count() > 0) {
-            exec("SET FOREIGN_KEY_CHECKS=0")
-            exec("TRUNCATE TABLE `mydatabase`.`Modules`;")
-            exec("SET FOREIGN_KEY_CHECKS=1")
-            fillModules()
-        }
+        fillModuleLinks()
+
+
     }
 
 }

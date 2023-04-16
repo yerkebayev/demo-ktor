@@ -24,6 +24,10 @@ fun main(args: Array<String>) {
                 isLenient = true
             })
         }
+//        install(CORS) {
+//            anyHost()
+//            allowHeader(HttpHeaders.ContentType)
+//        }
     }
     server.start(wait = true)
 
@@ -36,5 +40,6 @@ fun Application.module() {
     configureModuleRouting()
     configureMetaRouting()
     configureModuleLinkRouting()
+    configureRouting()
 
 }

@@ -1,16 +1,19 @@
 package com.example.plugins
 
 import Page
+import com.example.StudentEachTeacher
 import com.example.dao.MetaDAOImpl
 import com.example.model.Meta
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.swagger.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import io.ktor.util.*
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 fun Application.configureMetaRouting() {
     val dao = MetaDAOImpl()
@@ -43,8 +46,17 @@ fun Application.configureMetaRouting() {
                 val json = Page.toJson(page)
                 call.respondText(json, ContentType.Application.Json, HttpStatusCode.OK)
 
-                }
             }
+            get("students-of-teacher") {
+                val list = dao.studentsEachTeacher()
+                val res = StudentEachTeacher.toJson(list)
+                call.respondText(res, ContentType.Application.Json, HttpStatusCode.OK)
+            }
+            get("teachers-of-module") {
+                val map = dao.howManyTeachersInModule()
+                call.respondText(Json.encodeToString(map), ContentType.Application.Json, HttpStatusCode.OK)
+            }
+
 
             get("{id}/meta/{mid}") {
                 val metaId = call.parameters.getOrFail<Int>("mid").toInt()
@@ -62,10 +74,12 @@ fun Application.configureMetaRouting() {
                 val metaId = call.parameters.getOrFail<Int>("mid").toInt()
                 val jsonString = call.receive<String>()
                 val meta = jsonContentConverter.decodeFromString(Meta.serializer(), jsonString)
-                when( dao.editMeta(metaId,
+                when (dao.editMeta(
+                    metaId,
                     moduleId,
                     meta.metaKey,
-                    meta.metaValue)) {
+                    meta.metaValue
+                )) {
                     true -> call.respond(HttpStatusCode.Accepted)
                     false -> call.respond(HttpStatusCode.BadRequest)
                 }
@@ -73,10 +87,16 @@ fun Application.configureMetaRouting() {
             delete("{id}/meta/{mid}") {
                 val metaId = call.parameters.getOrFail<Int>("mid").toInt()
                 dao.deleteMeta(metaId)
-                when( dao.deleteMeta(metaId) ) {
+                when (dao.deleteMeta(metaId)) {
                     true -> call.respond(HttpStatusCode.Accepted)
                     false -> call.respond(HttpStatusCode.BadRequest)
                 }
             }
+
+            swaggerUI(path = "swagger", swaggerFile = "/home/marat9/IdeaProjects/MyDemoKtor/src/main/resources/openapi/metadocs.yaml")
+//            openAPI(path="openapi", swaggerFile = "openapi/documentation.yaml") {
+//                codegen = StaticHtmlCodegen()
+//            }
         }
+    }
 }
