@@ -1,0 +1,218 @@
+openapi: 3.0.0
+info:
+  title: Meta API
+  version: 1.0.0
+paths:
+  /api/module/{id}/metas/{page}/{size}:
+    get:
+      summary: Get paginated metas by moduleId
+      parameters:
+        - name: id
+          in: path
+          description: Module ID
+          required: true
+          schema:
+            type: integer
+        - name: page
+          in: path
+          description: Page number
+          required: true
+          schema:
+            type: integer
+        - name: size
+          in: path
+          description: Page size
+          required: true
+          schema:
+            type: integer
+        - name: filter
+          in: query
+          description: Filter by metaKey or metaValue
+          required: false
+          schema:
+            type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageMeta'
+    put:
+      summary: Update a meta by moduleId and metaId
+      parameters:
+        - name: id
+          in: path
+          description: Module ID
+          required: true
+          schema:
+            type: integer
+        - name: mid
+          in: path
+          description: Meta ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Meta to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meta'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+    delete:
+      summary: Delete a meta by metaId
+      parameters:
+        - name: id
+          in: path
+          description: Module ID
+          required: true
+          schema:
+            type: integer
+        - name: mid
+          in: path
+          description: Meta ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+  /api/module/students-of-teacher:
+    get:
+      summary: Returns the list of students for each teacher.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    teacherId:
+                      type: integer
+                      description: The ID of the teacher.
+                    teacherName:
+                      type: string
+                      description: The name of the teacher.
+                    numberOfStudents:
+                      type: integer
+                      description: The number of students for the teacher.
+                  example:
+                    - teacherId: 1
+                      teacherName: John Doe
+                      numberOfStudents: 20
+                    - teacherId: 2
+                      teacherName: Jane Smith
+                      numberOfStudents: 15
+  /api/module/{page}/{size}/first:
+    get:
+      summary: Retrieves paginated data from a database based on given filters
+      parameters:
+        - in: path
+          name: page
+          required: true
+          description: The page number to retrieve
+          schema:
+            type: integer
+        - in: path
+          name: size
+          required: true
+          description: The number of items to retrieve per page
+          schema:
+            type: integer
+        - in: query
+          name: filters
+          required: false
+          description: JSON object containing filters to apply to the data
+          schema:
+            type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Page"
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        moduleId:
+          type: integer
+          example: 1
+        metaKey:
+          type: string
+          example: title
+        metaValue:
+          type: string
+          example: Ktor project
+      required:
+        - metaKey
+        - metaValue
+    PageMeta:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Meta'
+          example:
+            - metaKey: title
+              metaValue: Ktor project
+            - metaKey: description
+              metaValue: Example project using Ktor
+        currentPage:
+          type: integer
+          example: 1
+        totalItems:
+          type: integer
+          example: 2
+        totalPages:
+          type: integer
+          example: 1
+    Page:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DatabaseRecord"
+        current_page:
+          type: integer
+          description: The current page number
+        total_items:
+          type: integer
+          description: The total number of items in the database that match the given filters
+        total_pages:
+          type: integer
+          description: The total number of pages in the database that match the given filters
+    DatabaseRecord:
+      type: object
+      properties:
+        teacherId:
+          type: integer
+          description: The ID of the teacher.
+        teacherName:
+          type: string
+          description: The name of the teacher.
+        numberOfStudents:
+          type: integer
+          description: The number of students for the teacher.
+      example:
+        teacherId: 1
+        teacherName: John Doe
+        numberOfStudents: 20
